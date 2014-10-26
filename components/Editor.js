@@ -80,12 +80,19 @@ var Editor = React.createClass({
             <Grid className="Editor">
 
                 <Row>
-                    <h1>Luo taso</h1>
-                    <p>Pidä näppäimiä painettuna sekunnin ajan</p>
+                    <Col xs={12} md={8}>
+                        <h1>Luo taso</h1>
+                        <p>Pidä näppäimiä painettuna sekunnin ajan</p>
+                        <Link disabled={stages.length === 0}
+                            className="btn btn-success Editor-save"
+                            to="startup"
+                            query={query}
+                            >Valmis!</Link>
+                    </Col>
                 </Row>
 
                 <Row>
-                    <Col>
+                    <Col xs={12} md={8}>
                         <Well className="Editor-workarea">
                             <Stage stage={activeKeys} />
                         </Well>
@@ -112,13 +119,6 @@ var Editor = React.createClass({
 
 
 
-                    <Col xs={6} md={4} >
-                        <Link disabled={stages.length === 0}
-                            className="btn btn-success Editor-save"
-                            to="startup"
-                            query={query}
-                            >Valmis!</Link>
-                    </Col>
 
 
                 </Row>
