@@ -4,6 +4,7 @@
 var React = require("react/addons");
 var Route = require("react-router").Route;
 var Routes = require("react-router").Routes;
+var Link = require("react-router").Link;
 
 var Main = require("./components/Main");
 var Play = require("./components/Play");
@@ -13,11 +14,40 @@ var GameOver = require("./components/GameOver");
 
 var appContainer = document.getElementById("app");
 
+var example = "#/startup?stage%5B0%5D=LEFT&stage%5B1%5D=DOWN&stage%5B2%5D=DOWN%2CLEFT&stage%5B3%5D=A%2CDOWN%2CRIGHT";
+
+/**
+ * About
+ *
+ * @namespace components
+ * @class About
+ * @constructor
+ * @param {Object} props
+ */
+var About = React.createClass({displayName: 'About',
+    render: function() {
+        return (
+            React.DOM.div({className: "About"}, 
+                React.DOM.h1(null, "mmpuzzle"), 
+
+                React.DOM.p(null, 
+                    "Yksinkertainen ", React.DOM.a({href: "http://www.makeymakey.com/"}, "Makey Makey"), " peli." + ' ' +
+
+                    "Kokeile ", React.DOM.a({href: example}, "esimerkkitasoa"), " tai luo ", Link({to: "editor"}, "omasi"), "." + ' ' +
+
+                    "Lähdekoodit löytyvät ", React.DOM.a({href: "https://github.com/opinsys/mmpuzzle"}, "Githubista"), "."
+                )
+
+            )
+        );
+    }
+});
 
 React.renderComponent(
     Routes({scrollBehavior: "none"}, 
         Route({handler: Main}, 
-            Route({name: "editor", path: "/", handler: Editor}), 
+            Route({name: "about", path: "/", handler: About}), 
+            Route({name: "editor", path: "/editor", handler: Editor}), 
             Route({name: "startup", path: "/startup", handler: StartUp}), 
             Route({name: "play", path: "/play", handler: Play}), 
             Route({name: "gameover", path: "/gameover", handler: GameOver})
@@ -110,7 +140,7 @@ var Editor = React.createClass({displayName: 'Editor',
                 Row(null, 
                     Col({xs: 12, md: 8}, 
                         React.DOM.h1(null, "Luo taso"), 
-                        React.DOM.p(null, "Pidä näppäimiä painettuna sekunnin ajan"), 
+                        React.DOM.p(null, "Yhdistä yksi tai useampi Makey Makey -johdin tallentaaksesi askeleen."), 
                         Link({disabled: stages.length === 0, 
                             className: "btn btn-success Editor-save", 
                             to: "startup", 
@@ -122,7 +152,7 @@ var Editor = React.createClass({displayName: 'Editor',
                 Row(null, 
                     Col({xs: 12, md: 8}, 
                         Well({className: "Editor-workarea"}, 
-                            Stage({stage: activeKeys})
+                            Stage({stage: activeKeys, activeKeys: activeKeys})
                         )
                     )
                 ), 
@@ -139,14 +169,11 @@ var Editor = React.createClass({displayName: 'Editor',
                                         onClick: function()  {return this.deleteStage(stage);}.bind(this)}, 
                                         "X"
                                     ), 
-                                    Stage({stage: stage, activeKeys: stage})
+                                    Stage({stage: stage})
                                 );
                             }.bind(this)).toArray()
                         )
                     )
-
-
-
 
 
                 ), 
@@ -414,6 +441,10 @@ var Main = React.createClass({displayName: 'Main',
                             Link({to: "editor"}, 
                             Fa({icon: "star"}), " Luo uusi taso"
                             )
+                        ), 
+
+                        Item({to: "about"}, 
+                            Fa({icon: "star"}), " Tietoja"
                         )
                     )
                 ), 
