@@ -62,11 +62,19 @@ var KeyWrapper = React.createClass({
         return (
             <div className="KeyWrapper">
                 <input className="KeyWrapper-input" ref="input" autofocus onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} onBlur={this.focus} />
-                <target activeKeys={activeKeys} />
+                {this.transferPropsTo(<target activeKeys={activeKeys} />)}
             </div>
         );
     }
 });
 
+
+KeyWrapper.wrap = function(Component) {
+    return React.createClass({
+        render: function() {
+            return this.transferPropsTo(<KeyWrapper target={Component} />);
+        },
+    });
+};
 
 module.exports = KeyWrapper;

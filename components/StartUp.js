@@ -3,6 +3,8 @@
 var React = require("react");
 var Navigation = require("react-router").Navigation;
 var StageMixin = require("./StageMixin");
+var KeyWrapper = require("./KeyWrapper");
+
 
 /**
  * StartUp
@@ -31,4 +33,4 @@ var StartUp = React.createClass({
     }
 });
 
-module.exports = StartUp;
+module.exports = KeyWrapper.wrap(StartUp);

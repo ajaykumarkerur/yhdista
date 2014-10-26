@@ -15,6 +15,7 @@ var Col = require("react-bootstrap/Col");
 var Well = require("react-bootstrap/Well");
 
 
+var KeyWrapper = require("./KeyWrapper");
 var Stage = require("./Stage");
 
 /**
@@ -125,4 +126,4 @@ var Editor = React.createClass({
     }
 });
 
-module.exports = Editor;
+module.exports = KeyWrapper.wrap(Editor);

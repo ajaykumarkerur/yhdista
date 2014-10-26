@@ -3,11 +3,11 @@
 
 var Immutable = require("immutable");
 var React = require("react");
-var prettyMs = require("pretty-ms");
 var Navigation = require("react-router").Navigation;
 var Label = require("react-bootstrap/Label");
 
 
+var KeyWrapper = require("./KeyWrapper");
 var Stage = require("./Stage");
 var StageMixin = require("./StageMixin");
 
@@ -111,4 +111,4 @@ var Play = React.createClass({
 
 });
 
-module.exports = Play;
+module.exports = KeyWrapper.wrap(Play);

@@ -16,7 +16,7 @@
 
 
 .Editor-workarea {
-    min-height: 100px;
+    min-height: 130px;
     margin-bottom: 10px;
 }
 
@@ -24,8 +24,8 @@
     margin-bottom: 10px;
 }
 
-.Editor-save {
-    margin-right: 10px;
+.Editor .btn {
+    margin: 10px;
 }
 
 .GameOver .label {

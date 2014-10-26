@@ -8,7 +8,6 @@ var Play = require("./components/Play");
 var StartUp = require("./components/StartUp");
 var Editor = require("./components/Editor");
 var GameOver = require("./components/GameOver");
-var KeyWrapper = require("./components/KeyWrapper");
 
 var appContainer = document.getElementById("app");
 
@@ -24,7 +23,7 @@ var Main = React.createClass({
     render: function() {
         return (
             <div className="Main container">
-                <KeyWrapper target={this.props.activeRouteHandler} />
+                {this.props.activeRouteHandler()}
             </div>
         );
     }
