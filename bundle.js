@@ -64,7 +64,6 @@ var Immutable = require("immutable");
 var _ = require("lodash");
 var Navigation = require("react-router").Navigation;
 
-var Badge = require("react-bootstrap/Badge");
 var Button = require("react-bootstrap/Button");
 var ListGroup = require("react-bootstrap/ListGroup");
 var ListGroupItem = require("react-bootstrap/ListGroupItem");
@@ -74,6 +73,7 @@ var Col = require("react-bootstrap/Col");
 var Well = require("react-bootstrap/Well");
 
 
+var Sounds = require("./Sounds");
 var KeyWrapper = require("./KeyWrapper");
 var Stage = require("./Stage");
 var StageMixin = require("./StageMixin");
@@ -99,6 +99,7 @@ var Editor = React.createClass({displayName: 'Editor',
     addStage: function(stage) {
         if (stage.length === 0) return;
         var stages = this.parseStages().push(stage);
+        Sounds.ok();
         this.saveStages(stages);
     },
 
@@ -190,7 +191,7 @@ var Editor = React.createClass({displayName: 'Editor',
 
 module.exports = KeyWrapper.wrap(Editor);
 
-},{"./KeyWrapper":5,"./Stage":9,"./StageMixin":10,"immutable":19,"lodash":20,"react":244,"react-bootstrap/Badge":23,"react-bootstrap/Button":25,"react-bootstrap/Col":26,"react-bootstrap/Grid":28,"react-bootstrap/ListGroup":30,"react-bootstrap/ListGroupItem":31,"react-bootstrap/Row":34,"react-bootstrap/Well":35,"react-router":54}],3:[function(require,module,exports){
+},{"./KeyWrapper":5,"./Sounds":8,"./Stage":9,"./StageMixin":10,"immutable":19,"lodash":20,"react":244,"react-bootstrap/Button":25,"react-bootstrap/Col":26,"react-bootstrap/Grid":28,"react-bootstrap/ListGroup":30,"react-bootstrap/ListGroupItem":31,"react-bootstrap/Row":34,"react-bootstrap/Well":35,"react-router":54}],3:[function(require,module,exports){
 /** @jsx React.DOM */
 "use strict";
 
@@ -250,8 +251,10 @@ module.exports = Fa;
 var React = require("react");
 var prettyMs = require("pretty-ms");
 var Navigation = require("react-router").Navigation;
-var Button = require("react-bootstrap/Button");
 var Link = require("react-router").Link;
+
+var Sounds = require("./Sounds");
+var StageMixin = require("./StageMixin");
 
 
 /**
@@ -263,7 +266,15 @@ var Link = require("react-router").Link;
  * @param {Object} props
  */
 var GameOver = React.createClass({displayName: 'GameOver',
-    mixins: [Navigation],
+    mixins: [Navigation, StageMixin],
+
+    componentDidMount: function() {
+        var coinCount = this.parseStages().reduce(function(count, stage)  {
+            return count + stage.count();
+        }, 0);
+
+        Sounds.times("ok", coinCount);
+    },
 
     render: function() {
         var time = parseInt(this.props.query.time, 10);
@@ -288,7 +299,7 @@ var GameOver = React.createClass({displayName: 'GameOver',
 
 module.exports = GameOver;
 
-},{"pretty-ms":21,"react":244,"react-bootstrap/Button":25,"react-router":54}],5:[function(require,module,exports){
+},{"./Sounds":8,"./StageMixin":10,"pretty-ms":21,"react":244,"react-router":54}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 "use strict";
 
@@ -521,7 +532,8 @@ var Play = React.createClass({displayName: 'Play',
 
     getInitialState: function() {
         return {
-            started: new Date()
+            started: new Date(),
+            badKeys: Immutable.Map()
         };
     },
 
@@ -535,6 +547,11 @@ var Play = React.createClass({displayName: 'Play',
         var stages = this.state.stages;
         var stage = stages.first();
 
+        var badKeys = nextProps.activeKeys.filter(function(v, k)   {return !stage.get(k);});
+        if (badKeys.count() > this.state.badKeys.count()) {
+            Sounds.error();
+        }
+
         if (Immutable.is(nextProps.activeKeys, stage)) {
             Sounds.play();
             stages = stages.rest();
@@ -544,26 +561,18 @@ var Play = React.createClass({displayName: 'Play',
             var started = this.state.started.getTime();
             var done = new Date().getTime();
             var time = done - started;
-
-            var times = Immutable.Vector(0, 100, 100, 100, 100, 100, 100);
-            (function success(times) {
-                if (times.length === 0) return;
-                Sounds.play();
-                setTimeout(function()  {return success(times.rest());}, times.first());
-            }(times));
-
             this.transitionTo("gameover", {}, {time:time, stage: this.props.query.stage});
             return;
         }
 
-        this.setState({stages:stages});
+        this.setState({stages:stages, badKeys:badKeys});
     },
 
     render: function() {
         var stage = this.state.stages.first();
+        var badKeys = this.state.badKeys;
         var activeKeys = this.props.activeKeys;
 
-        var badKeys = activeKeys.filter(function(v, k)   {return !stage.get(k);});
 
         return (
             React.DOM.div({className: "Play"}, 
@@ -590,16 +599,37 @@ var Play = React.createClass({displayName: 'Play',
 module.exports = KeyWrapper.wrap(Play);
 
 },{"./KeyWrapper":5,"./Sounds":8,"./Stage":9,"./StageMixin":10,"immutable":19,"react":244,"react-bootstrap/Label":29,"react-router":54}],8:[function(require,module,exports){
+/** @jsx React.DOM */
 "use strict";
-
 
 
 // http://egonelbre.com/project/jsfx/
 module.exports = {
-    play: function() {
+    ok: function() {
         window.jsfxlib.createWave(["square",0.0000,0.4000,0.0000,0.0200,0.5490,0.4380,20.0000,1490.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.5420,0.1140,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]).play();
 
-    }
+    },
+
+    error: function() {
+        window.jsfxlib.createWave(["saw",0.0000,0.2460,0.0000,0.2660,0.0000,0.1380,110.0000,693.0000,2400.0000,-0.7500,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.2200,0.1820,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]).play();
+    },
+
+    times: function(sound, count, delay) {
+        delay = delay || 100;
+
+        var loop = function(_count)  {
+            if (!_count) return;
+            this[sound]();
+            console.log(_count);
+            setTimeout(function()  {return loop(_count-1);}, delay);
+        }.bind(this);
+
+        loop(count);
+    },
+
+    play: function() {
+        this.ok();
+    },
 };
 
 },{}],9:[function(require,module,exports){
