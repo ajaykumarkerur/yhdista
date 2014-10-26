@@ -6,7 +6,6 @@ var Immutable = require("immutable");
 var _ = require("lodash");
 var Navigation = require("react-router").Navigation;
 
-var Badge = require("react-bootstrap/Badge");
 var Button = require("react-bootstrap/Button");
 var ListGroup = require("react-bootstrap/ListGroup");
 var ListGroupItem = require("react-bootstrap/ListGroupItem");
@@ -16,6 +15,7 @@ var Col = require("react-bootstrap/Col");
 var Well = require("react-bootstrap/Well");
 
 
+var Sounds = require("./Sounds");
 var KeyWrapper = require("./KeyWrapper");
 var Stage = require("./Stage");
 var StageMixin = require("./StageMixin");
@@ -41,6 +41,7 @@ var Editor = React.createClass({
     addStage: function(stage) {
         if (stage.length === 0) return;
         var stages = this.parseStages().push(stage);
+        Sounds.ok();
         this.saveStages(stages);
     },
 

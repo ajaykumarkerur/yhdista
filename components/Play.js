@@ -88,14 +88,6 @@ var Play = React.createClass({
             var started = this.state.started.getTime();
             var done = new Date().getTime();
             var time = done - started;
-
-            var times = Immutable.Vector(100, 100, 100, 100, 100, 100);
-            (function success(times) {
-                if (times.length === 0) return;
-                Sounds.play();
-                setTimeout(() => success(times.rest()), times.first());
-            }(times));
-
             this.transitionTo("gameover", {}, {time, stage: this.props.query.stage});
             return;
         }

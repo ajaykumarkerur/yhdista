@@ -4,8 +4,10 @@
 var React = require("react");
 var prettyMs = require("pretty-ms");
 var Navigation = require("react-router").Navigation;
-var Button = require("react-bootstrap/Button");
 var Link = require("react-router").Link;
+
+var Sounds = require("./Sounds");
+var StageMixin = require("./StageMixin");
 
 
 /**
@@ -17,7 +19,15 @@ var Link = require("react-router").Link;
  * @param {Object} props
  */
 var GameOver = React.createClass({
-    mixins: [Navigation],
+    mixins: [Navigation, StageMixin],
+
+    componentDidMount: function() {
+        var coinCount = this.parseStages().reduce((count, stage) => {
+            return count + stage.count();
+        }, 0);
+
+        Sounds.times("ok", coinCount);
+    },
 
     render: function() {
         var time = parseInt(this.props.query.time, 10);
