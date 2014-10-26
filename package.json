@@ -1,0 +1,53 @@
+{
+  "name": "mmpuzzle",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "browserify": {
+    "transform": [
+      [
+        "reactify",
+        {
+          "es6": true
+        }
+      ]
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "watchify": "^2.1.0",
+    "browserify": "^6.2.0",
+    "jsxhint": "^0.4.15",
+    "react-router": "~0.9.4",
+    "serve": "^1.4.0",
+    "react": "~0.11.2",
+    "reactify": "~0.14.0",
+    "lodash": "~2.4.1",
+    "immutable": "~2.6.1",
+    "bootstrap": "~3.2.0",
+    "react-bootstrap": "~0.12.0"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "undef": true,
+    "unused": "vars",
+    "node": true,
+    "browser": true,
+    "strict": true,
+    "newcap": false,
+    "lastsemic": true,
+    "globals": {
+      "alert": true,
+      "it": true,
+      "describe": true,
+      "before": true,
+      "beforeEach": true,
+      "afterEach": true,
+      "after": true
+    }
+  }
+}

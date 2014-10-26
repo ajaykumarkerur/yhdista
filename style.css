@@ -1,0 +1,25 @@
+
+
+.KeyWrapper-input {
+    position: absolute;
+    top: -1000px;
+}
+
+
+.Stage .badge {
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+
+.Editor-workarea {
+    min-height: 50px;
+}
+
+.Editor-saved-list li {
+    margin-bottom: 10px;
+}
+
+.Editor-save {
+    margin-right: 10px;
+}
