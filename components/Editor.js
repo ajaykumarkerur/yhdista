@@ -82,7 +82,7 @@ var Editor = React.createClass({
                 <Row>
                     <Col xs={12} md={8}>
                         <h1>Luo taso</h1>
-                        <p>Yhdistä yksi tai useampi Makey Makey -johdin tallentaaksesi askeleen.</p>
+                        <p>Yhdistä yksi tai useampi Makey Makey -johdin hetkeksi tallentaaksesi askeleen.</p>
                         <Link disabled={stages.length === 0}
                             className="btn btn-success Editor-save"
                             to="startup"
