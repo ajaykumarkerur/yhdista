@@ -64,6 +64,10 @@ var Main = React.createClass({
                             <Fa icon="star" /> Luo uusi taso
                             </Link>
                         </li>
+
+                        <Item to="about" >
+                            <Fa icon="star" /> Tietoja
+                        </Item>
                     </Nav>
                 </Navbar>
                 <div className="container">

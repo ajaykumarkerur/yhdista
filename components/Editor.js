@@ -82,7 +82,7 @@ var Editor = React.createClass({
                 <Row>
                     <Col xs={12} md={8}>
                         <h1>Luo taso</h1>
-                        <p>Pidä näppäimiä painettuna sekunnin ajan</p>
+                        <p>Yhdistä yksi tai useampi Makey Makey -johdin tallentaaksesi askeleen.</p>
                         <Link disabled={stages.length === 0}
                             className="btn btn-success Editor-save"
                             to="startup"
@@ -94,7 +94,7 @@ var Editor = React.createClass({
                 <Row>
                     <Col xs={12} md={8}>
                         <Well className="Editor-workarea">
-                            <Stage stage={activeKeys} />
+                            <Stage stage={activeKeys} activeKeys={activeKeys} />
                         </Well>
                     </Col>
                 </Row>
@@ -111,14 +111,11 @@ var Editor = React.createClass({
                                         onClick={() => this.deleteStage(stage)}>
                                         X
                                     </Button>
-                                    <Stage stage={stage} activeKeys={stage} />
+                                    <Stage stage={stage} />
                                 </ListGroupItem>;
                             }).toArray()}
                         </ListGroup>
                     </Col>
-
-
-
 
 
                 </Row>
