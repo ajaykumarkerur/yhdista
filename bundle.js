@@ -31,7 +31,7 @@ var About = React.createClass({displayName: 'About',
                 React.DOM.h1(null, "mmpuzzle"), 
 
                 React.DOM.p(null, 
-                    "Yksinkertainen ", React.DOM.a({href: "http://www.makeymakey.com/"}, "Makey Makey"), " peli." + ' ' +
+                    "Yksinkertainen ", React.DOM.a({href: "http://www.makeymakey.com/"}, "Makey Makey"), " -peli." + ' ' +
 
                     "Kokeile ", React.DOM.a({href: example}, "esimerkkitasoa"), " tai luo ", Link({to: "editor"}, "omasi"), "." + ' ' +
 
