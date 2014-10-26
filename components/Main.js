@@ -1,13 +1,31 @@
 /** @jsx React.DOM */
 "use strict";
 var React = require("react/addons");
+var classSet = React.addons.classSet;
 var Link = require("react-router").Link;
+var ActiveState = require("react-router").ActiveState;
 
 var Navbar = require("react-bootstrap/Navbar");
 var Nav = require("react-bootstrap/Nav");
 
 var StageMixin = require("./StageMixin");
+var Fa = require("./Fa");
 
+
+var Item = React.createClass({
+    mixins: [ActiveState],
+
+    render: function() {
+        var className = classSet({
+            active: this.isActive(this.props.to)
+        });
+        return (
+            <li className={className}>
+                {this.transferPropsTo(<Link>{this.props.children}</Link>)}
+            </li>
+        );
+    }
+});
 
 /**
  * Main
@@ -31,17 +49,20 @@ var Main = React.createClass({
                 <Navbar>
                     <Nav>
                         {query.stage.length > 0 &&
-                        <li>
-                            <Link to="editor" query={query}>Muokkaa tasoa</Link>
-                        </li>}
+                            <Item to="editor" query={query}>
+                                <Fa icon="edit" /> Muokkaa tasoa
+                            </Item>}
+
 
                         {query.stage.length > 0 &&
-                        <li>
-                            <Link to="startup" query={query}>Aloita</Link>
-                        </li>}
+                            <Item to="startup" query={query}>
+                                <Fa icon="play" /> Aloita
+                            </Item>}
 
                         <li>
-                            <Link to="editor" >Luo uusi taso</Link>
+                            <Link to="editor" >
+                            <Fa icon="star" /> Luo uusi taso
+                            </Link>
                         </li>
                     </Nav>
                 </Navbar>
