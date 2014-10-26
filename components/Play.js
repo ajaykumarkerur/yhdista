@@ -59,7 +59,8 @@ var Play = React.createClass({
 
     getInitialState: function() {
         return {
-            started: new Date()
+            started: new Date(),
+            badKeys: Immutable.Map()
         };
     },
 
@@ -73,6 +74,11 @@ var Play = React.createClass({
         var stages = this.state.stages;
         var stage = stages.first();
 
+        var badKeys = nextProps.activeKeys.filter((v, k) =>  !stage.get(k));
+        if (badKeys.count() > this.state.badKeys.count()) {
+            Sounds.error();
+        }
+
         if (Immutable.is(nextProps.activeKeys, stage)) {
             Sounds.play();
             stages = stages.rest();
@@ -83,7 +89,7 @@ var Play = React.createClass({
             var done = new Date().getTime();
             var time = done - started;
 
-            var times = Immutable.Vector(0, 100, 100, 100, 100, 100, 100);
+            var times = Immutable.Vector(100, 100, 100, 100, 100, 100);
             (function success(times) {
                 if (times.length === 0) return;
                 Sounds.play();
@@ -94,14 +100,14 @@ var Play = React.createClass({
             return;
         }
 
-        this.setState({stages});
+        this.setState({stages, badKeys});
     },
 
     render: function() {
         var stage = this.state.stages.first();
+        var badKeys = this.state.badKeys;
         var activeKeys = this.props.activeKeys;
 
-        var badKeys = activeKeys.filter((v, k) =>  !stage.get(k));
 
         return (
             <div className="Play">
