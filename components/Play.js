@@ -107,7 +107,7 @@ var Play = React.createClass({
             <div className="Play">
                 <RunningTimer from={this.state.started} />
 
-                <h1>Paina</h1>
+                <h1>Yhdistä</h1>
 
                 <Stage stage={stage} activeKeys={activeKeys} />
 
