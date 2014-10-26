@@ -9,6 +9,10 @@ var Badge = require("react-bootstrap/Badge");
 var Button = require("react-bootstrap/Button");
 var ListGroup = require("react-bootstrap/ListGroup");
 var ListGroupItem = require("react-bootstrap/ListGroupItem");
+var Grid = require("react-bootstrap/Grid");
+var Row = require("react-bootstrap/Row");
+var Col = require("react-bootstrap/Col");
+var Well = require("react-bootstrap/Well");
 
 
 var Stage = require("./Stage");
@@ -63,41 +67,60 @@ var Editor = React.createClass({
             stage: stages.map(s => s.flip().join(",")).toArray()
         };
 
-        console.log(query.stage);
-
-                // {stages.map(stage => <Stage stage={stage} />)}
         return (
-            <div>
-                <h1>Luo taso</h1>
-                <p>Pidä näppäimiä painettuna sekunnin ajan</p>
+            <Grid className="Editor">
 
-                <div className="Editor-workarea">
-                    <Stage stage={activeKeys} />
-                </div>
+                <Row>
+                    <h1>Luo taso</h1>
+                    <p>Pidä näppäimiä painettuna sekunnin ajan</p>
+                </Row>
 
-
-                <ListGroup className="Editor-saved-list">
-                    {stages.map( (stage, i) => {
-                        return <ListGroupItem key={i}>
-                            <Badge>{i+1}</Badge>
-                            <Stage stage={stage} activeKeys={stage} />
-                        </ListGroupItem>;
-                    }).toArray()}
-                </ListGroup>
+                <Row>
+                    <Col>
+                        <Well className="Editor-workarea">
+                            <Stage stage={activeKeys} />
+                        </Well>
+                    </Col>
+                </Row>
 
 
 
+                <Row>
+                    <Col xs={12} md={8}>
+                        <ListGroup className="Editor-saved-list">
+                            {stages.reverse().map( (stage, i) => {
+                                return <ListGroupItem key={i}>
+                                    <Badge>{stages.length - i}</Badge>
+                                    <Stage stage={stage} activeKeys={stage} />
+                                </ListGroupItem>;
+                            }).toArray()}
+                        </ListGroup>
+                    </Col>
 
-                <Link disabled={stages.length === 0} className="btn btn-success Editor-save" to="startup" query={query} >Valmis!</Link>
 
-                <Button className="Editor-cancel" bsStyle="danger" onClick={this.deletePrevious}>Poista edellinen</Button>
 
-                <div className="debug">
+                    <Col xs={6} md={4} >
+                        <Link disabled={stages.length === 0}
+                            className="btn btn-success Editor-save"
+                            to="startup"
+                            query={query}
+                            >Valmis!</Link>
+
+                        <Button className="Editor-cancel"
+                            bsStyle="danger"
+                            onClick={this.deletePrevious}
+                            >Poista edellinen</Button>
+                    </Col>
+
+
+                </Row>
+
+                <Row className="debug">
                     <hr />
                     <pre>{JSON.stringify(this.props.activeKeys)}</pre>
                     <pre>{JSON.stringify(this.state.stages)}</pre>
-                </div>
-            </div>
+                </Row>
+            </Grid>
         );
     }
 });
