@@ -6,6 +6,8 @@ var classSet = React.addons.classSet;
 var Badge = require("react-bootstrap/Badge");
 var Immutable = require("immutable");
 
+var Fa = require("./Fa");
+
 /**
  * Stage
  *
@@ -22,6 +24,17 @@ var Stage = React.createClass({
         };
     },
 
+    getIcon: function(key) {
+        var icons = {
+            UP: <Fa icon="arrow-up" />,
+            DOWN: <Fa icon="arrow-down" />,
+            LEFT: <Fa icon="arrow-left" />,
+            RIGHT: <Fa icon="arrow-right" />
+        };
+
+        return icons[key] || key;
+    },
+
     render: function() {
         var activeKeys = this.props.activeKeys;
         var stage = this.props.stage;
@@ -36,7 +49,7 @@ var Stage = React.createClass({
                     });
 
                     return <span>
-                        <Badge className={className} >{key}</Badge>
+                        <Badge className={className} >{this.getIcon(key)}</Badge>
                     </span>;
                 })}
             </div>
