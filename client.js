@@ -6,6 +6,7 @@ var Routes = require("react-router").Routes;
 
 var Play = require("./components/Play");
 var Editor = require("./components/Editor");
+var GameOver = require("./components/GameOver");
 var KeyWrapper = require("./components/KeyWrapper");
 
 var appContainer = document.getElementById("app");
@@ -33,6 +34,7 @@ React.renderComponent(
         <Route handler={Main}>
             <Route name="editor" path="/" handler={Editor} />
             <Route name="play" path="/play" handler={Play} />
+            <Route name="gameover" path="/gameover" handler={GameOver} />
         </Route>
     </Routes>, appContainer);
 

@@ -27,3 +27,7 @@
 .Editor-save {
     margin-right: 10px;
 }
+
+.GameOver .label {
+    font-size: 80px;
+}
