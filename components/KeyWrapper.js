@@ -18,7 +18,12 @@ var getKey = require("./getKey");
 var KeyWrapper = React.createClass({
 
     componentDidMount: function() {
+        document.addEventListener("click", this.focus);
         this.focus();
+    },
+
+    componentWillUnmount: function() {
+        document.removeEventListener("click", this.focus);
     },
 
     componentDidUpdate: function() {
