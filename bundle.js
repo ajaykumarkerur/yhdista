@@ -650,12 +650,14 @@ var Stage = React.createClass({displayName: 'Stage',
                 stage.flip().toArray().map(function(key)  {
 
                     var className = classSet({
-                        "btn-success": activeKeys.get(key),
-                        "btn-danger": this.props.invalid
+                        "badge": true,
+                        "Stage-coin": true,
+                        "Stage-ok": activeKeys.get(key),
+                        "Stage-invalid": this.props.invalid
                     });
 
-                    return React.DOM.span(null, 
-                        Badge({className: className}, this.getIcon(key))
+                    return React.DOM.span({className: className}, 
+                        React.DOM.span({className: "Stage-coin-inner"}, this.getIcon(key))
                     );
                 }.bind(this))
             )
