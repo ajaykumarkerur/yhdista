@@ -66,7 +66,7 @@ var Main = React.createClass({
                         </li>
 
                         <Item to="about" >
-                            <Fa icon="star" /> Tietoja
+                            <Fa icon="question" /> Tietoja
                         </Item>
                     </Nav>
                 </Navbar>
