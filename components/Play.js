@@ -5,6 +5,7 @@ var Immutable = require("immutable");
 var React = require("react");
 var prettyMs = require("pretty-ms");
 var Navigation = require("react-router").Navigation;
+var Label = require("react-bootstrap/Label");
 
 
 var Stage = require("./Stage");
@@ -12,15 +13,25 @@ var StageMixin = require("./StageMixin");
 
 var RunningTimer = React.createClass({
 
+    getInitialState: function() {
+        return {seconds: 0};
+    },
+
     componentDidMount: function() {
         this.update();
     },
 
     update: function() {
-        if (this.isMounted()) {
-            this.forceUpdate();
-            setTimeout(this.update, 100);
+        if (!this.isMounted()) return;
+
+        var now = new Date();
+        var from = this.props.from;
+        var seconds = Math.round((now.getTime() - from.getTime()) / 1000);
+        if (this.state.seconds !== seconds) {
+            this.setState({seconds});
         }
+
+        setTimeout(this.update, 100);
     },
 
     componentWillUnmount: function() {
@@ -28,11 +39,9 @@ var RunningTimer = React.createClass({
     },
 
     render: function() {
-        var now = new Date();
-        var from = this.props.from;
         return (
             <div className="RunningTimer">
-                {prettyMs(now.getTime() - from.getTime())}
+                <Label>{this.state.seconds} sekuntia</Label>
             </div>
         );
     },
@@ -83,9 +92,12 @@ var Play = React.createClass({
 
         return (
             <div className="Play">
+                <RunningTimer from={this.state.started} />
 
                 <h1>Paina</h1>
                 <Stage stage={stage} activeKeys={this.props.activeKeys} />
+                <div>
+                </div>
 
                 <div className="debug">
                     <hr />

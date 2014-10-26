@@ -30,7 +30,7 @@ var GameOver = React.createClass({
                     Taso suoritettu ajassa {prettyMs(time)}
                 </p>
 
-                <Link to="play" className="btn btn-success" query={{stage: this.props.query.stage}} >
+                <Link to="startup" className="btn btn-success" query={{stage: this.props.query.stage}} >
                     Uudestaan!
                 </Link>
 

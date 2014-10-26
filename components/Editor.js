@@ -88,7 +88,7 @@ var Editor = React.createClass({
 
 
 
-                <Link disabled={stages.length === 0} className="btn btn-success Editor-save" to="play" query={query} >Valmis!</Link>
+                <Link disabled={stages.length === 0} className="btn btn-success Editor-save" to="startup" query={query} >Valmis!</Link>
 
                 <Button className="Editor-cancel" bsStyle="danger" onClick={this.deletePrevious}>Poista edellinen</Button>
 

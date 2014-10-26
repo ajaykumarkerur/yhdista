@@ -10,13 +10,13 @@
 
 
 .Stage .badge {
-    font-size: 40px;
+    font-size: 80px;
     margin-right: 10px;
 }
 
 
 .Editor-workarea {
-    min-height: 50px;
+    min-height: 100px;
     margin-bottom: 10px;
 }
 
@@ -30,4 +30,8 @@
 
 .GameOver .label {
     font-size: 80px;
+}
+
+.RunningTimer {
+    float: right;
 }
