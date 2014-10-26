@@ -444,7 +444,7 @@ var Main = React.createClass({displayName: 'Main',
                         ), 
 
                         Item({to: "about"}, 
-                            Fa({icon: "star"}), " Tietoja"
+                            Fa({icon: "question"}), " Tietoja"
                         )
                     )
                 ), 
