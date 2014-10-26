@@ -45,7 +45,8 @@ var Stage = React.createClass({
                 {stage.flip().toArray().map(key => {
 
                     var className = classSet({
-                        "btn-success": activeKeys.get(key)
+                        "btn-success": activeKeys.get(key),
+                        "btn-danger": this.props.invalid
                     });
 
                     return <span>

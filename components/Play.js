@@ -99,15 +99,19 @@ var Play = React.createClass({
 
     render: function() {
         var stage = this.state.stages.first();
+        var activeKeys = this.props.activeKeys;
+
+        var badKeys = activeKeys.filter((v, k) =>  !stage.get(k));
 
         return (
             <div className="Play">
                 <RunningTimer from={this.state.started} />
 
                 <h1>Paina</h1>
-                <Stage stage={stage} activeKeys={this.props.activeKeys} />
-                <div>
-                </div>
+
+                <Stage stage={stage} activeKeys={activeKeys} />
+
+                <Stage invalid stage={badKeys} />
 
                 <div className="debug">
                     <hr />
