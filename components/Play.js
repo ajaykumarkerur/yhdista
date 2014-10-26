@@ -101,7 +101,7 @@ var Play = React.createClass({
 
                 <div className="debug">
                     <hr />
-                    <pre>{JSON.stringify(this.state.stages)}</pre>
+                    <pre>{JSON.stringify(this.parseStages())}</pre>
                     <pre>{JSON.stringify(this.props.query)}</pre>
                     <pre>{JSON.stringify(this.props.activeKeys)}</pre>
                 </div>

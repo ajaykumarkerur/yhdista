@@ -40,10 +40,10 @@ var KeyWrapper = React.createClass({
         };
     },
 
-    shouldComponentUpdate: function(nextProps, nextState) {
-        if (this.props.target !== nextProps.target) return true;
-        return !Immutable.is(nextState.activeKeys, this.state.activeKeys);
-    },
+    // shouldComponentUpdate: function(nextProps, nextState) {
+    //     if (this.props.target !== nextProps.target) return true;
+    //     return !Immutable.is(nextState.activeKeys, this.state.activeKeys);
+    // },
 
 
     handleKeyDown: function(e) {

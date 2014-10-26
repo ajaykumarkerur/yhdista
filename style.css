@@ -2,9 +2,10 @@
 
 .KeyWrapper-input {
     position: fixed;
-    top: -100px;
+    top: 0px;
     right: 0px;
-    width: 10px;
+    width: 1px;
+    height: 1px;
 }
 
 
@@ -34,3 +35,9 @@
 .RunningTimer {
     float: right;
 }
+
+.Editor-delete-stage {
+    float: right;
+}
+
+.debug { display: none; }

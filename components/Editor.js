@@ -4,6 +4,7 @@ var React = require("react");
 var Link = require("react-router").Link;
 var Immutable = require("immutable");
 var _ = require("lodash");
+var Navigation = require("react-router").Navigation;
 
 var Badge = require("react-bootstrap/Badge");
 var Button = require("react-bootstrap/Button");
@@ -17,6 +18,7 @@ var Well = require("react-bootstrap/Well");
 
 var KeyWrapper = require("./KeyWrapper");
 var Stage = require("./Stage");
+var StageMixin = require("./StageMixin");
 
 /**
  * Editor
@@ -28,44 +30,50 @@ var Stage = require("./Stage");
  */
 var Editor = React.createClass({
 
+    mixins: [StageMixin, Navigation],
+
     getInitialState: function() {
         return {
             stages: Immutable.Vector()
         };
     },
 
-    saveStage: function(stage) {
+    addStage: function(stage) {
         if (stage.length === 0) return;
-        this.setState({
-            stages: this.state.stages.push(stage)
-        });
+        var stages = this.parseStages().push(stage);
+        this.saveStages(stages);
+    },
+
+    saveStages: function(stages) {
+        this.transitionTo("editor", {}, {stage: this.stagesToQuery(stages)});
     },
 
     componentWillMount: function() {
-        this.saveStageDebounced = _.debounce(this.saveStage, 1000);
-    },
-
-    deletePrevious: function(e) {
-        e.preventDefault();
-        this.setState({
-            stages: this.state.stages.pop()
-        });
+        this.addStageDebounced = _.debounce(this.addStage, 1000);
     },
 
     componentWillReceiveProps: function(nextProps) {
         if (Immutable.is(this.props.activeKeys, nextProps.activeKeys)) {
             return;
         }
-        this.saveStageDebounced(nextProps.activeKeys);
+        this.addStageDebounced(nextProps.activeKeys);
+    },
+
+    deleteStage: function(stage) {
+        var stages = this.parseStages() .filter(current => {
+            return !Immutable.is(current, stage);
+        });
+
+        this.saveStages(stages);
     },
 
     render: function() {
 
-        var stages = this.state.stages;
+        var stages = this.parseStages();
         var activeKeys = this.props.activeKeys;
 
         var query = {
-            stage: stages.map(s => s.flip().join(",")).toArray()
+            stage: this.stagesToQuery(stages)
         };
 
         return (
@@ -91,7 +99,11 @@ var Editor = React.createClass({
                         <ListGroup className="Editor-saved-list">
                             {stages.reverse().map( (stage, i) => {
                                 return <ListGroupItem key={i}>
-                                    <Badge>{stages.length - i}</Badge>
+                                    <Button className="Editor-delete-stage"
+                                        bsStyle="danger"
+                                        onClick={() => this.deleteStage(stage)}>
+                                        X
+                                    </Button>
                                     <Stage stage={stage} activeKeys={stage} />
                                 </ListGroupItem>;
                             }).toArray()}
@@ -106,11 +118,6 @@ var Editor = React.createClass({
                             to="startup"
                             query={query}
                             >Valmis!</Link>
-
-                        <Button className="Editor-cancel"
-                            bsStyle="danger"
-                            onClick={this.deletePrevious}
-                            >Poista edellinen</Button>
                     </Col>
 
 
@@ -119,7 +126,7 @@ var Editor = React.createClass({
                 <Row className="debug">
                     <hr />
                     <pre>{JSON.stringify(this.props.activeKeys)}</pre>
-                    <pre>{JSON.stringify(this.state.stages)}</pre>
+                    <pre>{JSON.stringify(this.parseStages())}</pre>
                 </Row>
             </Grid>
         );
