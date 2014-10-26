@@ -30,7 +30,7 @@ var About = React.createClass({
                 <h1>mmpuzzle</h1>
 
                 <p>
-                    Yksinkertainen <a href="http://www.makeymakey.com/">Makey Makey</a> peli.
+                    Yksinkertainen <a href="http://www.makeymakey.com/">Makey Makey</a> -peli.
 
                     Kokeile <a href={example} >esimerkkitasoa</a> tai luo <Link to="editor">omasi</Link>.
 
