@@ -561,15 +561,19 @@ var Play = React.createClass({displayName: 'Play',
 
     render: function() {
         var stage = this.state.stages.first();
+        var activeKeys = this.props.activeKeys;
+
+        var badKeys = activeKeys.filter(function(v, k)   {return !stage.get(k);});
 
         return (
             React.DOM.div({className: "Play"}, 
                 RunningTimer({from: this.state.started}), 
 
                 React.DOM.h1(null, "Paina"), 
-                Stage({stage: stage, activeKeys: this.props.activeKeys}), 
-                React.DOM.div(null
-                ), 
+
+                Stage({stage: stage, activeKeys: activeKeys}), 
+
+                Stage({invalid: true, stage: badKeys}), 
 
                 React.DOM.div({className: "debug"}, 
                     React.DOM.hr(null), 
@@ -646,7 +650,8 @@ var Stage = React.createClass({displayName: 'Stage',
                 stage.flip().toArray().map(function(key)  {
 
                     var className = classSet({
-                        "btn-success": activeKeys.get(key)
+                        "btn-success": activeKeys.get(key),
+                        "btn-danger": this.props.invalid
                     });
 
                     return React.DOM.span(null, 
