@@ -45,12 +45,14 @@ var Stage = React.createClass({
                 {stage.flip().toArray().map(key => {
 
                     var className = classSet({
-                        "btn-success": activeKeys.get(key),
-                        "btn-danger": this.props.invalid
+                        "badge": true,
+                        "Stage-coin": true,
+                        "Stage-ok": activeKeys.get(key),
+                        "Stage-invalid": this.props.invalid
                     });
 
-                    return <span>
-                        <Badge className={className} >{this.getIcon(key)}</Badge>
+                    return <span className={className}>
+                        <span className="Stage-coin-inner" >{this.getIcon(key)}</span>
                     </span>;
                 })}
             </div>
