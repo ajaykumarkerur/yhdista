@@ -352,13 +352,31 @@ module.exports = KeyWrapper;
 /** @jsx React.DOM */
 "use strict";
 var React = require("react/addons");
+var classSet = React.addons.classSet;
 var Link = require("react-router").Link;
+var ActiveState = require("react-router").ActiveState;
 
 var Navbar = require("react-bootstrap/Navbar");
 var Nav = require("react-bootstrap/Nav");
 
 var StageMixin = require("./StageMixin");
+var Fa = require("./Fa");
 
+
+var Item = React.createClass({displayName: 'Item',
+    mixins: [ActiveState],
+
+    render: function() {
+        var className = classSet({
+            active: this.isActive(this.props.to)
+        });
+        return (
+            React.DOM.li({className: className}, 
+                this.transferPropsTo(Link(null, this.props.children))
+            )
+        );
+    }
+});
 
 /**
  * Main
@@ -382,17 +400,20 @@ var Main = React.createClass({displayName: 'Main',
                 Navbar(null, 
                     Nav(null, 
                         query.stage.length > 0 &&
-                        React.DOM.li(null, 
-                            Link({to: "editor", query: query}, "Muokkaa tasoa")
-                        ), 
+                            Item({to: "editor", query: query}, 
+                                Fa({icon: "edit"}), " Muokkaa tasoa"
+                            ), 
+
 
                         query.stage.length > 0 &&
-                        React.DOM.li(null, 
-                            Link({to: "startup", query: query}, "Aloita")
-                        ), 
+                            Item({to: "startup", query: query}, 
+                                Fa({icon: "play"}), " Aloita"
+                            ), 
 
                         React.DOM.li(null, 
-                            Link({to: "editor"}, "Luo uusi taso")
+                            Link({to: "editor"}, 
+                            Fa({icon: "star"}), " Luo uusi taso"
+                            )
                         )
                     )
                 ), 
@@ -407,7 +428,7 @@ var Main = React.createClass({displayName: 'Main',
 
 module.exports = Main;
 
-},{"./StageMixin":9,"react-bootstrap/Nav":31,"react-bootstrap/Navbar":32,"react-router":53,"react/addons":84}],7:[function(require,module,exports){
+},{"./Fa":3,"./StageMixin":9,"react-bootstrap/Nav":31,"react-bootstrap/Navbar":32,"react-router":53,"react/addons":84}],7:[function(require,module,exports){
 /** @jsx React.DOM */
 "use strict";
 
