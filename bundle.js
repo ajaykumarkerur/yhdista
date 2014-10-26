@@ -569,7 +569,7 @@ var Play = React.createClass({displayName: 'Play',
             React.DOM.div({className: "Play"}, 
                 RunningTimer({from: this.state.started}), 
 
-                React.DOM.h1(null, "Paina"), 
+                React.DOM.h1(null, "Yhdistä"), 
 
                 Stage({stage: stage, activeKeys: activeKeys}), 
 
