@@ -15,7 +15,7 @@ var appContainer = document.getElementById("app");
 
 
 React.renderComponent(
-    Routes(null, 
+    Routes({scrollBehavior: "none"}, 
         Route({handler: Main}, 
             Route({name: "editor", path: "/", handler: Editor}), 
             Route({name: "startup", path: "/startup", handler: StartUp}), 
