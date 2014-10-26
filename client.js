@@ -29,9 +29,13 @@ var About = React.createClass({
             <div className="About">
                 <h1>mmpuzzle</h1>
 
-                Yksinkertainen <a href="http://www.makeymakey.com/">Makey Makey</a> peli.
+                <p>
+                    Yksinkertainen <a href="http://www.makeymakey.com/">Makey Makey</a> peli.
 
-                Kokeile <a href={example} >esimerkkitasoa</a> tai luo <Link to="editor">omasi</Link>.
+                    Kokeile <a href={example} >esimerkkitasoa</a> tai luo <Link to="editor">omasi</Link>.
+
+                    Lähdekoodit löytyvät <a href="https://github.com/opinsys/mmpuzzle">Githubista</a>.
+                </p>
 
             </div>
         );
