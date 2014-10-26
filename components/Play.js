@@ -7,6 +7,7 @@ var Navigation = require("react-router").Navigation;
 var Label = require("react-bootstrap/Label");
 
 
+var Sounds = require("./Sounds");
 var KeyWrapper = require("./KeyWrapper");
 var Stage = require("./Stage");
 var StageMixin = require("./StageMixin");
@@ -73,6 +74,7 @@ var Play = React.createClass({
         var stage = stages.first();
 
         if (Immutable.is(nextProps.activeKeys, stage)) {
+            Sounds.play();
             stages = stages.rest();
         }
 
@@ -80,6 +82,14 @@ var Play = React.createClass({
             var started = this.state.started.getTime();
             var done = new Date().getTime();
             var time = done - started;
+
+            var times = Immutable.Vector(0, 100, 100, 100, 100, 100, 100);
+            (function success(times) {
+                if (times.length === 0) return;
+                Sounds.play();
+                setTimeout(() => success(times.rest()), times.first());
+            }(times));
+
             this.transitionTo("gameover", {}, {time, stage: this.props.query.stage});
             return;
         }
