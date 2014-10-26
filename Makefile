@@ -7,7 +7,7 @@ js:
 	browserify client.js > bundle.js
 
 push:
-	git push origin master:gh-pages
+	git push -f origin master:gh-pages
 
 publish: js
 	git add -f bundle.js
