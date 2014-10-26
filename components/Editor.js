@@ -75,18 +75,16 @@ var Editor = React.createClass({
                     <Stage stage={activeKeys} />
                 </div>
 
-                <hr />
 
                 <ListGroup className="Editor-saved-list">
                     {stages.map( (stage, i) => {
-                        return <ListGroupItem key={stage}>
+                        return <ListGroupItem key={i}>
                             <Badge>{i+1}</Badge>
                             <Stage stage={stage} activeKeys={stage} />
                         </ListGroupItem>;
                     }).toArray()}
                 </ListGroup>
 
-                <hr />
 
 
 

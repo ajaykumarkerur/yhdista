@@ -1,8 +1,11 @@
 
 
 .KeyWrapper-input {
-    position: absolute;
-    top: -1000px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 0px;
+    opacity: 0;
 }
 
 
@@ -14,6 +17,7 @@
 
 .Editor-workarea {
     min-height: 50px;
+    margin-bottom: 10px;
 }
 
 .Editor-saved-list li {
