@@ -16,3 +16,5 @@ publish: js
 	$(MAKE) push
 
 
+server:
+	python -m SimpleHTTPServer
