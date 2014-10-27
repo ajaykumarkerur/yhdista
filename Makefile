@@ -1,6 +1,7 @@
 export PATH := node_modules/.bin:$(PATH)
+all: npm js
 
-build:
+npm:
 	npm i
 
 js:
