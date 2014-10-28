@@ -253,6 +253,7 @@ var prettyMs = require("pretty-ms");
 var Navigation = require("react-router").Navigation;
 var Link = require("react-router").Link;
 
+var KeyWrapper = require("./KeyWrapper");
 var Sounds = require("./Sounds");
 var StageMixin = require("./StageMixin");
 
@@ -276,6 +277,12 @@ var GameOver = React.createClass({displayName: 'GameOver',
         Sounds.times("ok", coinCount);
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.activeKeys.get("ENTER") || nextProps.activeKeys.get("SPACE")) {
+            this.transitionTo("startup", {}, {stage: this.props.query.stage});
+        }
+    },
+
     render: function() {
         var time = parseInt(this.props.query.time, 10);
         return (
@@ -297,9 +304,9 @@ var GameOver = React.createClass({displayName: 'GameOver',
 });
 
 
-module.exports = GameOver;
+module.exports = KeyWrapper.wrap(GameOver);
 
-},{"./Sounds":8,"./StageMixin":10,"pretty-ms":21,"react":244,"react-router":54}],5:[function(require,module,exports){
+},{"./KeyWrapper":5,"./Sounds":8,"./StageMixin":10,"pretty-ms":21,"react":244,"react-router":54}],5:[function(require,module,exports){
 /** @jsx React.DOM */
 "use strict";
 
@@ -349,7 +356,6 @@ var KeyWrapper = React.createClass({displayName: 'KeyWrapper',
 
 
     handleKeyDown: function(e) {
-        e.preventDefault();
         this.setState({
             activeKeys: this.state.activeKeys.set(getKey(e), true)
         });
