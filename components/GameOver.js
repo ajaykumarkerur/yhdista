@@ -6,6 +6,7 @@ var prettyMs = require("pretty-ms");
 var Navigation = require("react-router").Navigation;
 var Link = require("react-router").Link;
 
+var KeyWrapper = require("./KeyWrapper");
 var Sounds = require("./Sounds");
 var StageMixin = require("./StageMixin");
 
@@ -29,6 +30,12 @@ var GameOver = React.createClass({
         Sounds.times("ok", coinCount);
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.activeKeys.get("ENTER") || nextProps.activeKeys.get("SPACE")) {
+            this.transitionTo("startup", {}, {stage: this.props.query.stage});
+        }
+    },
+
     render: function() {
         var time = parseInt(this.props.query.time, 10);
         return (
@@ -50,4 +57,4 @@ var GameOver = React.createClass({
 });
 
 
-module.exports = GameOver;
+module.exports = KeyWrapper.wrap(GameOver);
