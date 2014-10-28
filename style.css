@@ -14,18 +14,14 @@
     border: 5px solid orange;
     border-radius: 30px;
     padding: 25px;
-    height: 100px;
     margin: 5px;
     box-shadow: 10px 10px 15px #888888;
     background-color: rgb(255, 223, 0);
 }
 
 .Stage-coin-inner {
-    font-size: 60px;
+    font-size: 175px;
     color: white;
-    position: relative;
-    top: -12px;
-    left: -5px;
 }
 
 .Stage-ok {
@@ -40,7 +36,7 @@
 }
 
 .Editor-workarea {
-    min-height: 140px;
+    min-height: 300px;
     margin-bottom: 10px;
 }
 

@@ -47,7 +47,6 @@ var KeyWrapper = React.createClass({
 
 
     handleKeyDown: function(e) {
-        e.preventDefault();
         this.setState({
             activeKeys: this.state.activeKeys.set(getKey(e), true)
         });
