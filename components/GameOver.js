@@ -27,17 +27,17 @@ var GameOver = React.createClass({
             return count + stage.count();
         }, 0);
 
-        Sounds.times("ok", coinCount);
+        Sounds.times("okShort", coinCount);
     },
 
     componentWillReceiveProps: function(nextProps) {
         if (nextProps.activeKeys.get("ENTER") || nextProps.activeKeys.get("SPACE")) {
-            this.transitionTo("startup", {}, {stage: this.props.query.stage});
+            this.transitionTo("startup", {}, {stage: this.getStageQuery()});
         }
     },
 
     render: function() {
-        var time = parseInt(this.props.query.time, 10);
+        var time = parseInt(this.getQuery().time, 10);
         return (
             <div className="GameOver">
                 <h1>
@@ -47,7 +47,7 @@ var GameOver = React.createClass({
                     Taso suoritettu ajassa {prettyMs(time)}
                 </p>
 
-                <Link to="startup" className="btn btn-success" query={{stage: this.props.query.stage}} >
+                <Link to="startup" className="btn btn-success" query={{stage: this.getStageQuery()}} >
                     Uudestaan!
                 </Link>
 

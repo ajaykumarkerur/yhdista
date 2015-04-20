@@ -1,8 +1,8 @@
-/** @jsx React.DOM */
 "use strict";
 var React = require("react/addons");
-var Route = require("react-router").Route;
-var Routes = require("react-router").Routes;
+
+var Router = require("react-router");
+var {Route, Routes, DefaultRoute, NotFoundRoute} = Router;
 var Link = require("react-router").Link;
 
 var Main = require("./components/Main");
@@ -42,14 +42,33 @@ var About = React.createClass({
     }
 });
 
-React.renderComponent(
-    <Routes scrollBehavior="none">
-        <Route handler={Main}>
-            <Route name="about" path="/" handler={About} />
-            <Route name="editor" path="/editor" handler={Editor} />
-            <Route name="startup" path="/startup" handler={StartUp} />
-            <Route name="play" path="/play" handler={Play} />
-            <Route name="gameover" path="/gameover" handler={GameOver} />
-        </Route>
-    </Routes>, appContainer);
+var NotFound = React.createClass({
+    render: function() {
+        return (
+            <div className="NotFound">
+                <p>
+                    404 - tuntematon osoite
+                </p>
+            </div>
+        );
+    }
+});
+
+
+var routes = (
+    <Route name="app" handler={Main} path="/">
+        <Route name="editor" handler={Editor} />
+        <Route name="startup" handler={StartUp} />
+        <Route name="play" handler={Play} />
+        <Route name="gameover" handler={GameOver} />
+        <NotFoundRoute handler={NotFound} />
+        <DefaultRoute name="about" handler={About} />
+    </Route>
+);
+
+Router.run(routes, (Handler, state) => {
+    console.log("Rendering", state.routes.map(r => r.handler.displayName));
+    React.render(<Handler /> , appContainer);
+});
+
 

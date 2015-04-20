@@ -1,9 +1,8 @@
-/** @jsx React.DOM */
 "use strict";
 
 var React = require("react/addons");
 var classSet = React.addons.classSet;
-var Badge = require("react-bootstrap/Badge");
+var Badge = require("react-bootstrap/lib/Badge");
 var Immutable = require("immutable");
 
 var Fa = require("./Fa");
@@ -38,11 +37,11 @@ var Stage = React.createClass({
     render: function() {
         var activeKeys = this.props.activeKeys;
         var stage = this.props.stage;
-        if (!stage) return null;
+        if (!stage) return <p>plaa no stage</p>;
 
         return (
             <div className="Stage">
-                {stage.flip().toArray().map(key => {
+                {stage.map((value, key) => {
 
                     var className = classSet({
                         "badge": true,

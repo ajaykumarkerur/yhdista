@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 "use strict";
 var React = require("react");
 var Link = require("react-router").Link;
@@ -6,13 +5,13 @@ var Immutable = require("immutable");
 var _ = require("lodash");
 var Navigation = require("react-router").Navigation;
 
-var Button = require("react-bootstrap/Button");
-var ListGroup = require("react-bootstrap/ListGroup");
-var ListGroupItem = require("react-bootstrap/ListGroupItem");
-var Grid = require("react-bootstrap/Grid");
-var Row = require("react-bootstrap/Row");
-var Col = require("react-bootstrap/Col");
-var Well = require("react-bootstrap/Well");
+var Button = require("react-bootstrap/lib/Button");
+var ListGroup = require("react-bootstrap/lib/ListGroup");
+var ListGroupItem = require("react-bootstrap/lib/ListGroupItem");
+var Grid = require("react-bootstrap/lib/Grid");
+var Row = require("react-bootstrap/lib/Row");
+var Col = require("react-bootstrap/lib/Col");
+var Well = require("react-bootstrap/lib/Well");
 
 
 var Sounds = require("./Sounds");
@@ -34,14 +33,15 @@ var Editor = React.createClass({
 
     getInitialState: function() {
         return {
-            stages: Immutable.Vector()
+            stages: Immutable.List()
         };
     },
 
     addStage: function(stage) {
-        if (stage.length === 0) return;
+        if (stage.count() === 0) return;
         var stages = this.parseStages().push(stage);
         Sounds.ok();
+        console.log("Saving statages", JSON.stringify(stages));
         this.saveStages(stages);
     },
 
@@ -84,7 +84,7 @@ var Editor = React.createClass({
                     <Col xs={12} md={8}>
                         <h1>Luo taso</h1>
                         <p>Yhdistä yksi tai useampi Makey Makey -johdin hetkeksi tallentaaksesi askeleen.</p>
-                        <Link disabled={stages.length === 0}
+                        <Link disabled={stages.count() === 0}
                             className="btn btn-success Editor-save"
                             to="startup"
                             query={query}
@@ -105,16 +105,19 @@ var Editor = React.createClass({
                 <Row>
                     <Col xs={12} md={8}>
                         <ListGroup className="Editor-saved-list">
-                            {stages.reverse().map( (stage, i) => {
-                                return <ListGroupItem key={i}>
-                                    <Button className="Editor-delete-stage"
-                                        bsStyle="danger"
-                                        onClick={() => this.deleteStage(stage)}>
-                                        X
-                                    </Button>
-                                    <Stage stage={stage} />
-                                </ListGroupItem>;
-                            }).toArray()}
+                            {stages.reverse().map((stage, i) => {
+                                console.log("rendering saved stage", JSON.stringify(stage));
+                                return (
+                                    <ListGroupItem key={i}>
+                                        <Button className="Editor-delete-stage"
+                                            bsStyle="danger"
+                                            onClick={() => this.deleteStage(stage)}>
+                                            X
+                                        </Button>
+                                        <Stage stage={stage} />
+                                    </ListGroupItem>
+                                );
+                            })}
                         </ListGroup>
                     </Col>
 

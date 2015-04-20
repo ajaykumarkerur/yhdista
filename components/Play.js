@@ -1,10 +1,9 @@
-/** @jsx React.DOM */
 "use strict";
 
 var Immutable = require("immutable");
 var React = require("react");
 var Navigation = require("react-router").Navigation;
-var Label = require("react-bootstrap/Label");
+var Label = require("react-bootstrap/lib/Label");
 
 
 var Sounds = require("./Sounds");
@@ -83,10 +82,8 @@ var Play = React.createClass({
         var stageOk = Immutable.is(nextProps.activeKeys, stage)
 
         if (badKeys.count() > this.state.badKeys.count()) {
-            console.log("Bad keys", JSON.stringify(okKeys));
             Sounds.error();
         } else if (okKeys.count() > 0 && !stageOk) {
-            console.log("OK keys", JSON.stringify(okKeys));
             Sounds.okShort()
         }
 
@@ -95,11 +92,11 @@ var Play = React.createClass({
             stages = stages.rest();
         }
 
-        if (stages.length === 0) {
+        if (stages.count() === 0) {
             var started = this.state.started.getTime();
             var done = new Date().getTime();
             var time = done - started;
-            this.transitionTo("gameover", {}, {time, stage: this.props.query.stage});
+            this.transitionTo("gameover", {}, {time, stage: this.getQuery().stage});
             return;
         }
 
@@ -125,7 +122,7 @@ var Play = React.createClass({
                 <div className="debug">
                     <hr />
                     <pre>{JSON.stringify(this.parseStages())}</pre>
-                    <pre>{JSON.stringify(this.props.query)}</pre>
+                    <pre>{JSON.stringify(this.getQuery())}</pre>
                     <pre>{JSON.stringify(this.props.activeKeys)}</pre>
                 </div>
             </div>

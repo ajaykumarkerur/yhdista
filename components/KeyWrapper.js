@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 "use strict";
 
 var React = require("react/addons");
@@ -16,6 +15,10 @@ var getKey = require("./getKey");
  * @param {Object} props
  */
 var KeyWrapper = React.createClass({
+
+    propTypes: {
+        Target: React.PropTypes.func.isRequired
+    },
 
     componentDidMount: function() {
         document.addEventListener("click", this.focus);
@@ -61,12 +64,12 @@ var KeyWrapper = React.createClass({
 
     render: function() {
         var activeKeys = this.state.activeKeys;
-        var target = this.props.target;
+        var Target = this.props.Target;
 
         return (
             <div className="KeyWrapper">
                 <input className="KeyWrapper-input" ref="input" autofocus onKeyDown={this.handleKeyDown} onKeyUp={this.handleKeyUp} onBlur={this.focus} />
-                {this.transferPropsTo(<target activeKeys={activeKeys} />)}
+                <Target {...this.props} activeKeys={activeKeys} />
             </div>
         );
     }
@@ -76,7 +79,7 @@ var KeyWrapper = React.createClass({
 KeyWrapper.wrap = function(Component) {
     return React.createClass({
         render: function() {
-            return this.transferPropsTo(<KeyWrapper target={Component} />);
+            return <KeyWrapper {...this.props} Target={Component} />;
         },
     });
 };

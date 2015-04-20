@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 "use strict";
 var React = require("react");
 var Navigation = require("react-router").Navigation;
@@ -18,9 +17,13 @@ var StartUp = React.createClass({
 
     mixins: [StageMixin, Navigation],
 
+    contextTypes: {
+        router: React.PropTypes.func
+    },
+
     componentWillReceiveProps: function(nextProps) {
-        if (nextProps.activeKeys.length) {
-            this.transitionTo("play", {}, this.props.query);
+        if (nextProps.activeKeys.count()) {
+            this.transitionTo("play", {}, this.context.router.getCurrentQuery());
         }
     },
 

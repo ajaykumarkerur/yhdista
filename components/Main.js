@@ -1,27 +1,29 @@
-/** @jsx React.DOM */
 "use strict";
 var React = require("react/addons");
 var classSet = React.addons.classSet;
 var Link = require("react-router").Link;
-var ActiveState = require("react-router").ActiveState;
+var RouteHandler = require("react-router").RouteHandler;
 
-var Navbar = require("react-bootstrap/Navbar");
-var Nav = require("react-bootstrap/Nav");
+var Navbar = require("react-bootstrap/lib/Navbar");
+var Nav = require("react-bootstrap/lib/Nav");
 
 var StageMixin = require("./StageMixin");
 var Fa = require("./Fa");
 
 
 var Item = React.createClass({
-    mixins: [ActiveState],
+
+    contextTypes: {
+        router: React.PropTypes.func
+    },
 
     render: function() {
         var className = classSet({
-            active: this.isActive(this.props.to)
+            active: this.context.router.isActive(this.props.to)
         });
         return (
             <li className={className}>
-                {this.transferPropsTo(<Link>{this.props.children}</Link>)}
+                <Link {...this.props}>{this.props.children}</Link>
             </li>
         );
     }
@@ -40,9 +42,7 @@ var Main = React.createClass({
     mixins: [StageMixin],
 
     render: function() {
-        var query = {
-            stage: this.getStageQuery()
-        };
+        var query = { stage: this.getStageQuery() };
 
         return (
             <div className="Main">
@@ -61,7 +61,7 @@ var Main = React.createClass({
 
                         <li>
                             <Link to="editor" >
-                            <Fa icon="star" /> Luo uusi taso
+                                <Fa icon="star" /> Luo uusi taso
                             </Link>
                         </li>
 
@@ -71,7 +71,7 @@ var Main = React.createClass({
                     </Nav>
                 </Navbar>
                 <div className="container">
-                    {this.props.activeRouteHandler()}
+                    <RouteHandler />
                 </div>
             </div>
         );
