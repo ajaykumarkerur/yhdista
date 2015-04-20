@@ -71,16 +71,27 @@ var Play = React.createClass({
     },
 
     componentWillReceiveProps: function(nextProps) {
+        if (Immutable.is(nextProps.activeKeys, this.props.activeKeys)) {
+            return;
+        }
+
         var stages = this.state.stages;
         var stage = stages.first();
 
         var badKeys = nextProps.activeKeys.filter((v, k) =>  !stage.get(k));
+        var okKeys = nextProps.activeKeys.filter((v, k) =>  stage.get(k));
+        var stageOk = Immutable.is(nextProps.activeKeys, stage)
+
         if (badKeys.count() > this.state.badKeys.count()) {
+            console.log("Bad keys", JSON.stringify(okKeys));
             Sounds.error();
+        } else if (okKeys.count() > 0 && !stageOk) {
+            console.log("OK keys", JSON.stringify(okKeys));
+            Sounds.okShort()
         }
 
-        if (Immutable.is(nextProps.activeKeys, stage)) {
-            Sounds.play();
+        if (stageOk) {
+            Sounds.ok();
             stages = stages.rest();
         }
 
