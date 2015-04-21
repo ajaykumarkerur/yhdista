@@ -35,7 +35,7 @@ var About = React.createClass({
                 <Grid>
                     <Row>
                         <Col md={12}>
-                            <h1>mmpuzzle</h1>
+                            <h1>Yhdistä</h1>
                         </Col>
                     </Row>
                     <Row>
@@ -45,7 +45,7 @@ var About = React.createClass({
 
                                 Kokeile <a href={example} >esimerkkitasoa</a> tai luo <Link to="editor">omasi</Link>.
 
-                                Lähdekoodit löytyvät <a href="https://github.com/opinsys/mmpuzzle">Githubista</a>.
+                                Lähdekoodit löytyvät <a href="https://github.com/opinsys/yhdista">Githubista</a>.
                             </p>
 
                             <p>
