@@ -5,7 +5,10 @@ npm:
 	npm i
 
 js:
-	browserify client.js > bundle.js
+	webpack
+
+js-watch:
+	webpack -w
 
 push:
 	git push -f origin master:gh-pages
