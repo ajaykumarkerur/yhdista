@@ -44,12 +44,11 @@ var RunningTimer = React.createClass({
                 <Label>{this.state.seconds} sekuntia</Label>
             </div>
         );
-    },
+    }
 
 });
 
 var Play = React.createClass({
-
     mixins: [StageMixin, Navigation],
 
     propTypes: {
@@ -77,14 +76,14 @@ var Play = React.createClass({
         var stages = this.state.stages;
         var stage = stages.first();
 
-        var badKeys = nextProps.activeKeys.filter((v, k) =>  !stage.get(k));
-        var okKeys = nextProps.activeKeys.filter((v, k) =>  stage.get(k));
-        var stageOk = Immutable.is(nextProps.activeKeys, stage)
+        var badKeys = nextProps.activeKeys.filter((v, k) => !stage.get(k));
+        var okKeys = nextProps.activeKeys.filter((v, k) => stage.get(k));
+        var stageOk = Immutable.is(nextProps.activeKeys, stage);
 
         if (badKeys.count() > this.state.badKeys.count()) {
             Sounds.error();
         } else if (okKeys.count() > 0 && !stageOk) {
-            Sounds.okShort()
+            Sounds.okShort();
         }
 
         if (stageOk) {
@@ -96,7 +95,11 @@ var Play = React.createClass({
             var started = this.state.started.getTime();
             var done = new Date().getTime();
             var time = done - started;
-            this.transitionTo("gameover", {}, {time, stage: this.getQuery().stage});
+            this.transitionTo("gameover", {}, {
+                playId: String(Date.now()),
+                time,
+                stage: this.getQuery().stage
+            });
             return;
         }
 
