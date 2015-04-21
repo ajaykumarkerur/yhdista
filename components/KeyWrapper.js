@@ -76,11 +76,13 @@ var KeyWrapper = React.createClass({
 });
 
 
-KeyWrapper.wrap = function(Component) {
+KeyWrapper.wrap = function(Component, statics) {
+
     return React.createClass({
+        statics: statics,
         render: function() {
             return <KeyWrapper {...this.props} Target={Component} />;
-        },
+        }
     });
 };
 

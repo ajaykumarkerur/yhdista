@@ -1,0 +1,30 @@
+{
+  "settings": {
+    "jsx": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": 0
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "quotes": [1, "double"],
+    curly: [2, "multi-line"],
+    consistent-return: [0],
+    "new-cap": [0],
+    "no-use-before-define": false,
+    "no-redeclare": [2],
+    no-comma-dangle: [0],
+    no-process-exit: [0],
+    no-shadow: false,
+    no-path-concat: false,
+    "no-unused-vars": [2, {"vars": "all", "args": "none"}],
+    "eol-last": [0],
+    "no-mixed-requires": [1],
+    "no-underscore-dangle": [0]
+  }
+}

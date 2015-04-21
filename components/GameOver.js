@@ -2,8 +2,10 @@
 
 var React = require("react");
 var prettyMs = require("pretty-ms");
-var Navigation = require("react-router").Navigation;
-var Link = require("react-router").Link;
+var {Navigation} = require("react-router");
+var {Link} = require("react-router");
+var Jumbotron = require("reac-bootstrap/lib/Jumbotron");
+var stringify = require("json-stable-stringify");
 
 var KeyWrapper = require("./KeyWrapper");
 var Sounds = require("./Sounds");
@@ -22,7 +24,8 @@ var GameOver = React.createClass({
     mixins: [Navigation, StageMixin],
 
     componentDidMount: function() {
-        var coinCount = this.parseStages().reduce((count, stage) => {
+        var stages = this.parseStages();
+        var coinCount = stages.reduce((count, stage) => {
             return count + stage.count();
         }, 0);
 
