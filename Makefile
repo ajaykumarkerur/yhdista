@@ -15,7 +15,7 @@ push:
 
 publish: js
 	git add -f bundle.js bundle.js.map
-	git commit bundle.js -m "Compile assets"
+	git commit bundle.js bundle.js.map -m "Compile assets"
 	$(MAKE) push
 
 
