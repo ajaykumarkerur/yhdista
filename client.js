@@ -5,6 +5,9 @@ var React = require("react/addons");
 var Router = require("react-router");
 var {Route, Routes, DefaultRoute, NotFoundRoute} = Router;
 var Link = require("react-router").Link;
+var Grid = require("react-bootstrap/lib/Grid");
+var Row = require("react-bootstrap/lib/Row");
+var Col = require("react-bootstrap/lib/Col");
 
 var Main = require("./components/Main");
 var Play = require("./components/Play");
@@ -28,16 +31,38 @@ var About = React.createClass({
     render: function() {
         return (
             <div className="About">
-                <h1>mmpuzzle</h1>
 
-                <p>
-                    Yksinkertainen <a href="http://www.makeymakey.com/">Makey Makey</a> -peli.
+                <Grid>
+                    <Row>
+                        <Col md={12}>
+                            <h1>mmpuzzle</h1>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <p>
+                                Yksinkertainen <a href="http://www.makeymakey.com/">Makey Makey</a> -peli.
 
-                    Kokeile <a href={example} >esimerkkitasoa</a> tai luo <Link to="editor">omasi</Link>.
+                                Kokeile <a href={example} >esimerkkitasoa</a> tai luo <Link to="editor">omasi</Link>.
 
-                    Lähdekoodit löytyvät <a href="https://github.com/opinsys/mmpuzzle">Githubista</a>.
-                </p>
+                                Lähdekoodit löytyvät <a href="https://github.com/opinsys/mmpuzzle">Githubista</a>.
+                            </p>
 
+                            <p>
+                                Pelin on toteuttanut <a href="http://opinsys.fi/">Opinsys Oy</a>.
+                            </p>
+                        </Col>
+                        <Col md={4}>
+                            <a href="pics/overview.jpg" className="thumbnail">
+                                <img src="pics/overview.jpg" />
+                            </a>
+
+                            <a href="pics/usage.jpg" className="thumbnail">
+                                <img src="pics/usage.jpg" />
+                            </a>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }
