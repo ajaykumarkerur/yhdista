@@ -5,7 +5,7 @@ npm:
 	npm i
 
 js:
-	webpack
+	webpack -p
 
 js-watch:
 	webpack -w
@@ -14,7 +14,7 @@ push:
 	git push -f origin master:gh-pages
 
 publish: js
-	git add -f bundle.js
+	git add -f bundle.js bundle.js.map
 	git commit bundle.js -m "Compile assets"
 	$(MAKE) push
 
