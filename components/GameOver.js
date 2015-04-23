@@ -35,11 +35,12 @@ var GameOver = React.createClass({
 
     componentDidMount: function() {
         var stages = this.parseStages();
-        var coinCount = stages.reduce((count, stage) => {
-            return count + stage.count();
-        }, 0);
 
-        Sounds.times("okShort", coinCount);
+        if (this.getPosition() === 1) {
+            Sounds.times("ok", 15);
+        } else {
+            Sounds.times("okShort", 10);
+        }
     },
 
     componentWillReceiveProps: function(nextProps) {
