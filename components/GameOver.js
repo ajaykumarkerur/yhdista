@@ -41,6 +41,11 @@ var GameOver = React.createClass({
         } else {
             Sounds.times("okShort", 10);
         }
+
+        var el = React.findDOMNode(this.refs.input.refs.input);
+        el.focus();
+        el.select();
+        this.saveScore();
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -53,26 +58,26 @@ var GameOver = React.createClass({
         var id = this.getQuery().playId;
         if (!id) throw new Error("playId missing");
         return id;
-
     },
 
     getInitialState() {
         var time = this.getTimeScore();
         var scores = this.getCurrentScores();
+        var d = new Date();
+        var name = `Klo. ${d.getHours()}:${d.getMinutes()}`
+
         scores = scores.concat({
             id: this.getPlayId(),
             time,
-            name: null
+            name,
         });
 
         scores = _.unique(scores, s => s.id);
         scores = scores.sort((a, b) => a.time - b.time);
 
-        return {
-            scores,
-            name: ""
-        };
+        return {scores, name, saved: false};
     },
+
 
     getTimeScore() {
         return parseInt(this.getQuery().time, 10);
@@ -97,8 +102,12 @@ var GameOver = React.createClass({
         var score = _.find(scores, s => s.id === playId);
         score.name = this.state.name;
         this.setState({scores});
-
         window.localStorage[this.getStageKey()] = JSON.stringify(scores);
+    },
+
+    userSave() {
+        this.saveScore();
+        this.setState({saved: true});
         var el = React.findDOMNode(this.refs.restart);
         el.focus();
     },
@@ -111,36 +120,49 @@ var GameOver = React.createClass({
         return !!score.name;
     },
 
-    renderSaveInput() {
+    renderScore(score) {
+        var id = this.getPlayId();
+
+        if (score.id !== id || this.state.saved) {
+            return (
+                <Col>
+                    {score.name}
+                </Col>
+            );
+        }
 
         return (
             <div>
                 <Col xs={5}>
                     <Input
                         autoFocus
+                        ref="input"
                         onChange={e => this.setState({ name: e.target.value })}
                         value={this.state.name}
                         type="text"
                         onKeyDown={e => {
-                            if (e.key === "Enter") this.saveScore();
+                            if (e.key === "Enter") this.userSave();
                         }}
                         placeholder="Ryhmän nimi" />
                 </Col>
                 <Col xs={2}>
                     <Button bsStyle="success"
                         disabled={!this.state.name.trim()}
-                        onClick={this.saveScore}>Tallenna</Button>
+                        onClick={this.userSave}>Tallenna</Button>
                 </Col>
             </div>
         );
     },
 
-    render: function() {
+    getPosition() {
+        var id = this.getPlayId();
+        return _.findIndex(this.state.scores, s => s.id === id) + 1;
+    },
 
+    render: function() {
         var scores = this.state.scores;
         var id = this.getPlayId();
-        var position = _.findIndex(scores, s => s.id === id) + 1;
-
+        var position = this.getPosition();
 
         return (
             <div className="GameOver">
@@ -181,11 +203,7 @@ var GameOver = React.createClass({
                                                     {prettyMs(score.time)}
                                                 </Col>
 
-                                                {!!score.name || this.renderSaveInput()}
-
-                                                {score.name && <Col>
-                                                    {score.name}
-                                                </Col>}
+                                                {this.renderScore(score)}
 
                                             </Row>
                                         </ListGroupItem>
